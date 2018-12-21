@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
 public class SignatureView extends View {
     private static final String TAG = "SignatureView";
     Paint paint = new Paint();  //定义画笔
-
+    private static float paintWidth;
     private Canvas mCanvas;     //定义画布
     private Bitmap mBitmap;
 
@@ -28,13 +29,14 @@ public class SignatureView extends View {
     public SignatureView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mCanvas = new Canvas();
+        paintWidth=TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,8f,getResources().getDisplayMetrics());
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         paint.setAntiAlias(true);
-        paint.setStrokeWidth(16);
+        paint.setStrokeWidth(paintWidth);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setStrokeCap(Paint.Cap.ROUND);
         paint.setStrokeMiter(90);
@@ -93,7 +95,9 @@ public class SignatureView extends View {
             int height= (int) (yMax-yMin);
             Log.e(TAG, "getBitmap: bitmap--0 getWidth   "+mBitmap.getWidth());
             Log.e(TAG, "getBitmap: bitmap--0  getHeight   "+mBitmap.getHeight());
-            Bitmap bitmap = Bitmap.createBitmap(mBitmap,(int)xMin,(int)yMin,width,height);
+
+            Bitmap bitmap = Bitmap.createBitmap(mBitmap,(int)xMin,(int)yMin
+                    ,(int) (width+paintWidth*2),(int) (height+paintWidth*2));
             Log.e(TAG, "getBitmap: bitmap原 getWidth   "+bitmap.getWidth());
             Log.e(TAG, "getBitmap: bitmap原 getHeight   "+bitmap.getHeight());
             return bitmap;

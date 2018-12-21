@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     val key: String = "hello  ll llll mm nn   nnnnn"
+    var isEnable=false
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +47,12 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             var createBitmap = signView.bitmap
             var mergeBitmap = mergeBitmap(createBitmap)
             imageView.setImage(ImageSource.bitmap(mergeBitmap))
-            downLoadImg(mergeBitmap)
+            btn.isEnabled=false
+//            downLoadImg(mergeBitmap)
         }
         btnClear.setOnClickListener {
             signView.clear()
+            btn.isEnabled=true
         }
     }
 
